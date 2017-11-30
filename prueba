@@ -1,0 +1,116 @@
+# coding=utf-8
+
+import time
+
+opcion=0
+lista_playlist=[]
+
+
+def imprimir_menu():
+        print "================================"
+        print "= Playlist IES FBMOLL ="
+        print "================================"
+        print "    = 1) Añadir playlist ="
+        print "    = 2) Borrar playlist ="
+        print "    = 3) Añadir canciones a playlist ="
+        print "    = 4) Buscar canción por titulo ="
+        print "    = 5) Listar playlist ="
+        print "    = 6) Salir ="
+        print "================================"
+
+def add_playlist():
+    playlistdirt = raw_input("Introduce el nombre de la playlist:")
+    playlist = [playlistdirt.upper()]
+    if playlist in lista_playlist:
+        print "La playlist que desea crear ya existe"
+        elegir_opcion(opcion)
+    else:
+        desc_playlist = raw_input("Añada una descripción")
+        playlist.append(desc_playlist)
+        playlist.append(('time():', time.ctime(time.time())))
+        lista_playlist.append(playlist)
+        elegir_opcion(opcion)
+        return lista_playlist
+
+def del_playlist(lista_playlist):
+    deletedirt = raw_input("Introduce el nombre de la lista que deseas borrar.")
+    delete = deletedirt.upper()
+    for delete in lista_playlist:
+        if delete in lista_playlist:
+            index=lista_playlist.index(delete)
+            lista_playlist.remove(delete)
+            elegir_opcion(opcion)
+            return lista_playlist
+        else:
+            print "Está lista no se encuentra en el programa"
+            elegir_opcion(opcion)
+def index_playlist(lista_playlist):
+    search_playlistdirt = raw_input("Introduce el nombre de la playlist a la que deseas añadir una canción: ")
+    search_playlist = search_playlistdirt.upper()
+    for i in range(len(lista_playlist)):
+        if search_playlist == lista_playlist[i][0]:
+            return i
+
+    return -1
+def index_song(lista_playlist,correct_playlist):
+    song = []
+    search_songdirt = raw_input("Introduce el nombre de la cancion que deseas añadir a la playlist: ")
+    search_song = search_songdirt.upper()
+    for i in range(len(lista_playlist[correct_playlist])):
+        if search_song == lista_playlist[correct_playlist:]:
+            return -1
+        else:
+            song.append(search_song)
+            return song
+
+def add_song(lista_playlist):
+    correct_playlist = index_playlist(lista_playlist)
+    if correct_playlist== -1:
+        print "La playlist a la que desea añadir una canción no existe. Por favor, creela en la opción 1 del menú."
+        elegir_opcion(opcion)
+    else:
+
+        song = index_song(lista_playlist,correct_playlist)
+        if song == -1:
+            print "La canción que intentas añadir ya está en la playlist"
+            option_2 = raw_input("Si quiere salir al menú pulse 1, si desea añadir otra canción pulse 2:")
+            if option_2 ==1:
+                elegir_opcion(opcion)
+            elif option_2 ==2:
+                add_song(lista_playlist)
+        else:
+            desc_song = raw_input("Introduce una descripcion de la canción")
+            song.append(desc_song)
+            year_song = int(raw_input("Introduce el año de la canción:"))
+            song.append(year_song)
+            time_song = raw_input("Introduce la duración de la canción")
+            song.append(time_song)
+            lista_playlist[correct_playlist].append(song)
+            elegir_opcion(opcion)
+            return lista_playlist
+
+def title_search(lista_playlist):
+    search_songdirt = raw_input("Introduce el nombre de la playlist a la que deseas añadir una canción: ")
+    search_song = search_songdirt.upper()
+    for i in range(len(lista_playlist)):
+        if search_song == lista_playlist[i][:]:
+            return i
+
+
+def elegir_opcion(opcion):
+    imprimir_menu()
+    print lista_playlist
+    opcion=int(raw_input("Seleccione la opción que desea."))
+    while opcion != 6:
+        if opcion==1:
+            add_playlist()
+        elif opcion==2:
+            del_playlist(lista_playlist)
+        elif opcion==3:
+            add_song(lista_playlist)
+        elif opcion==4:
+            title_search(lista_playlist)
+        elif opcion==5:
+            list_playlist
+
+print elegir_opcion(opcion)
